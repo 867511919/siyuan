@@ -38,4 +38,20 @@
         <servlet-name>updateServlet</servlet-name>
         <url-pattern>/servlet/updateServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>UploadHandleServlet</servlet-name>
+        <servlet-class>servlet.UploadHandleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadHandleServlet</servlet-name>
+        <url-pattern>/servlet/UploadHandleServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>servlet.CourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/servlet/CourseServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

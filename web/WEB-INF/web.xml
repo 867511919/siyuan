@@ -46,4 +46,12 @@
         <servlet-name>UploadHandleServlet</servlet-name>
         <url-pattern>/servlet/UploadHandleServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>servlet.CourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/servlet/CourseServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
