@@ -2238,6 +2238,7 @@ table th[class*="span"],
 .table th.span12 {
   float: none;
   width: 924px;
+
   margin-left: 0;
 }
 

@@ -46,7 +46,7 @@ public class GetMovInfo {
         parameterMap.put("Format", "JSON");
 //        parameterMap.put("Title","aaa");
         // 加入方法特有参数
-        parameterMap.put("VideoId", "417dddf682554729b22d982ef4da7ab7");
+        parameterMap.put("VideoId", "29afc97965334befad9c462158019b08");
         // 对参数进行排序
         List<String> sortedKeys = new ArrayList<String>(parameterMap.keySet());
         Collections.sort(sortedKeys);

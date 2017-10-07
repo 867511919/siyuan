@@ -54,4 +54,28 @@
         <servlet-name>CourseServlet</servlet-name>
         <url-pattern>/servlet/CourseServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>MaCourseServlet</servlet-name>
+        <servlet-class>servlet.MaCourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MaCourseServlet</servlet-name>
+        <url-pattern>/servlet/MaCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>upCourseServlet</servlet-name>
+        <servlet-class>servlet.upCourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>upCourseServlet</servlet-name>
+        <url-pattern>/servlet/upCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>upCourseHandleServlet</servlet-name>
+        <servlet-class>servlet.upCourseHandleServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>upCourseHandleServlet</servlet-name>
+        <url-pattern>/servelt/upCourseHandleServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

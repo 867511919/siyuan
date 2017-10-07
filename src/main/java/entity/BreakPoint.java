@@ -2,16 +2,18 @@ package entity;
 
 /**
  * Created by zhangyan on 2017/9/26.
+ *
+ * 断点实体层
  */
 public class BreakPoint {
-    private int movId;
+    private String movId;
     private String startTime;
-    private int questionID;
-    public int getMovId() {
+
+    public String getMovId() {
         return movId;
     }
 
-    public void setMovId(int movId) {
+    public void setMovId(String movId) {
         this.movId = movId;
     }
 
@@ -22,15 +24,6 @@ public class BreakPoint {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
-
-    public int getQuestionID() {
-        return questionID;
-    }
-
-    public void setQuestionID(int questionID) {
-        this.questionID = questionID;
-    }
-
 
 
 }

@@ -1,6 +1,12 @@
 <%@ page import="dao.ChoiceDAO" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entity.ChoiceQuestion" %><%--
+<%@ page import="entity.ChoiceQuestion" %>
+<%@ page import="entity.course" %>
+<%@ page import="dao.CourseDao" %>
+
+
+
+<%--
   Created by IntelliJ IDEA.
   User: null
   Date: 2017/8/28
@@ -179,7 +185,22 @@
               </tr>
               </thead>
               <tbody>
+
               <%
+
+                CourseDao courseDao=new CourseDao();
+                ArrayList<course> list1=courseDao.GetAllCourse();
+                if(list1!=null&&list1.size()>0) {
+                  for (int i = 0; i < list1.size(); i++) {
+                    course cr = list1.get(i);
+                    System.out.println(cr.getTitle());
+
+
+                  }
+                }
+
+
+
                 ChoiceDAO choiceDAO=new ChoiceDAO();
                 ArrayList<ChoiceQuestion> list=choiceDAO.getAllQuestion();
                 if(list!=null&&list.size()>0){
@@ -362,7 +383,7 @@
 <script src="<%=basePath%>/js/retina.js"></script>
 
 <script src="<%=basePath%>/js/custom.js"></script>
-<!-- end: JavaScript-->
+<!-- end: JavaScript-->wq2
 
 </body>
 </html>

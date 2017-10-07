@@ -61,7 +61,7 @@ public class AliBaBa {
     /*
     查看视频信息，返回的是api请求
      */
-    public String GetMovinfo() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+    public String GetMovinfo(String s) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
         final String HTTP_METHOD = "GET";
         Map<String, String> parameterMap = new HashMap<String, String>();
         // 加入请求公共参数
@@ -77,7 +77,7 @@ public class AliBaBa {
         parameterMap.put("Format", "JSON");
 //        parameterMap.put("Title","aaa");
         // 加入方法特有参数
-        parameterMap.put("VideoId", "417dddf682554729b22d982ef4da7ab7");
+        parameterMap.put("VideoId", s);
         // 对参数进行排序
         List<String> sortedKeys = new ArrayList<String>(parameterMap.keySet());
         Collections.sort(sortedKeys);
@@ -176,7 +176,7 @@ public class AliBaBa {
     修改视频信息
 
      */
-    public String UpdateMoviInfo() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException{
+    public String UpdateMoviInfo(String movId,String newTitle,String newDes) throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException{
         final String HTTP_METHOD = "GET";
         Map<String, String> parameterMap = new HashMap<String, String>();
         // 加入请求公共参数
@@ -190,9 +190,10 @@ public class AliBaBa {
 //        parameterMap.put("SignatureNonce", "578a50c1-280d-4a34-bffc-e06aa6b2df76");//此处将唯一随机数固定只是测试需要，这样此示例中生成的签名值就不会变，方便您对比验证，可变唯一随机数的生成需要用下边这句替换
         parameterMap.put("SignatureNonce", UUID.randomUUID().toString());
         parameterMap.put("Format", "JSON");
-        parameterMap.put("Title","aaa");
+        parameterMap.put("Title",newTitle);
+        parameterMap.put("Description",newDes);
         // 加入方法特有参数
-        parameterMap.put("VideoId", "29afc97965334befad9c462158019b08");
+        parameterMap.put("VideoId", movId);
         // 对参数进行排序
         List<String> sortedKeys = new ArrayList<String>(parameterMap.keySet());
         Collections.sort(sortedKeys);
@@ -232,6 +233,69 @@ public class AliBaBa {
     }
 
     /*
+    获取upAddr 和 upAuth无参数版
+     */
+
+    public String getUpApi() throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException {
+
+        final String HTTP_METHOD = "GET";
+        Map<String, String> parameterMap = new HashMap<String, String>();
+        // 加入请求公共参数
+        parameterMap.put("Action", "CreateUploadVideo");
+        parameterMap.put("Version", "2017-03-21");
+        parameterMap.put("AccessKeyId", "LTAIXASvvpSofGG7"); //此处请替换成您自己的AccessKeyId
+//        parameterMap.put("Timestamp", "2017-03-29T12:09:11Z");//此处将时间戳固定只是测试需要，这样此示例中生成的签名值就不会变，方便您对比验证，可变时间戳的生成需要用下边这句替换
+        parameterMap.put("Timestamp", formatIso8601Date(new Date()));
+        parameterMap.put("SignatureMethod", "HMAC-SHA1");
+        parameterMap.put("SignatureVersion", "1.0");
+//        parameterMap.put("SignatureNonce", "578a50c1-280d-4a34-bffc-e06aa6b2df76");//此处将唯一随机数固定只是测试需要，这样此示例中生成的签名值就不会变，方便您对比验证，可变唯一随机数的生成需要用下边这句替换
+        parameterMap.put("SignatureNonce", UUID.randomUUID().toString());
+        parameterMap.put("Format", "JSON");
+        parameterMap.put("Title","testTitle");
+        parameterMap.put("Description","testDescription");
+        // 加入方法特有参数
+        parameterMap.put("FileName", "hahha.mp4");
+
+        // 对参数进行排序
+        List<String> sortedKeys = new ArrayList<String>(parameterMap.keySet());
+        Collections.sort(sortedKeys);
+        // 生成stringToSign字符
+        final String SEPARATOR = "&";
+        final String EQUAL = "=";
+        StringBuilder stringToSign = new StringBuilder();
+        stringToSign.append(HTTP_METHOD).append(SEPARATOR);
+        stringToSign.append(percentEncode("/")).append(SEPARATOR);
+        StringBuilder canonicalizedQueryString = new StringBuilder();
+//        System.out.print(stringToSign.toString());
+        for (String key : sortedKeys) {
+            // 此处需要对key和value进行编码0SWfkYqzxGDu5wqPqHeY9r7pXcaslR
+            String value = parameterMap.get(key);
+            canonicalizedQueryString.append(SEPARATOR).append(percentEncode(key)).append(EQUAL).append(percentEncode(value));
+        }
+        // 此处需要对canonicalizedQueryString进行编码
+        stringToSign.append(percentEncode(canonicalizedQueryString.toString().substring(1)));
+        final String ALGORITHM = "HmacSHA1";
+        final String secret = "0SWfkYqzxGDu5wqPqHeY9r7pXcaslR";//此处请替换成您的AccessKeySecret
+        SecretKey key = new SecretKeySpec((secret + SEPARATOR).getBytes(ENCODE_TYPE),HMAC_SHA1);
+        Mac mac = Mac.getInstance(ALGORITHM);
+        mac.init(key);
+        String signature;
+        signature = URLEncoder.encode(new String(new org.apache.commons.codec.binary.Base64().encode(mac.doFinal(stringToSign.toString().getBytes(ENCODE_TYPE))),
+                ENCODE_TYPE), ENCODE_TYPE);
+        // 生成请求URL
+        StringBuilder requestURL;
+        requestURL = new StringBuilder("http://vod.cn-shanghai.aliyuncs.com?");
+        requestURL.append(URLEncoder.encode("Signature", ENCODE_TYPE)).append("=").append(signature);
+        for (Map.Entry<String, String> e : parameterMap.entrySet()) {
+            requestURL.append("&").append(percentEncode(e.getKey())).append("=").append(percentEncode(e.getValue()));
+        }
+        System.out.print(requestURL.toString());
+        return requestURL.toString();
+
+    }
+
+
+    /*
     Alibaba Util
      */
     private static final String ISO8601_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
@@ -246,11 +310,13 @@ public class AliBaBa {
         return URLEncoder.encode(value, ENCODE_TYPE).replace("+", "%20").replace("*", "%2A").replace("%7E", "~");
     }
 
+
     public static void main(String[] args) {
         AliBaBa ud=new AliBaBa();
-//        ud.upToaliyun();
+
+
         try {
-            System.out.print(ud.UpdateMoviInfo());
+            ud.getUpApi();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
@@ -258,5 +324,9 @@ public class AliBaBa {
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void upToaliyun(String s) {
     }
 }

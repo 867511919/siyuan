@@ -1,28 +1,30 @@
 package dao;
 
 import db.DBUtil;
+import entity.ChoiceQuestion;
 import entity.course;
+import server.APIUtil;
+import server.AliBaBa;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by zhangyan on 2017/9/26.
  */
 public class CourseDao {
 
-    public void saveCourse(course cs){
+    public void saveCourse(String movId){
 
         try {
             Connection conn=DBUtil.getConnection();
-            String sql="insert into test_course (title,description,price,coureseID) values (?,?,?,?)";
+            String sql="insert into test_course (coureseID) values (?)";
             PreparedStatement pst=conn.prepareStatement(sql);
-            pst.setString(1,cs.getTitle());
-            pst.setString(2,cs.getDescription());
-            pst.setDouble(3, Double.parseDouble(cs.getPrice()));
-            pst.setString(4,cs.getMovid());
+            pst.setString(1,movId);
+
 
             pst.execute();
 
@@ -51,14 +53,64 @@ public class CourseDao {
         return re;
     }
 
+    public ArrayList<course> GetAllCourse(){
+        ArrayList<course> courses=new ArrayList<course>();
+        ArrayList<course> tmp=new ArrayList<course>();
+        AliBaBa ab=new AliBaBa();
+        APIUtil au=new APIUtil();
+        ResultSet rs=null;
+        Statement stmt=null;
+        try {
+            Connection conn= DBUtil.getConnection();
+            stmt=conn.createStatement();
+            rs=stmt.executeQuery("SELECT * FROM test_course");
+            while (rs.next()){
+                String movId=rs.getString("coureseID");
+                String apiUrl=ab.GetMovinfo(movId);
+                course cr= au.getJson(apiUrl);
+                courses.add(cr);
+
+            }
+            return courses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } finally {
+            if(rs!=null){
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(stmt!=null){
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+        return courses;
+    }
     public static void main(String[] args) {
-        CourseDao cd=new CourseDao();
-        course ss=new course();
-//        ss.setTitle("hhhhsda");
-//        ss.setDescription("hhh");
-//        ss.setPrice("1.2");
-//        ss.setMovid("a^hd3@djjd");
-//        cd.saveCourse(ss);
-        System.out.print(cd.QueryByMovId("206af78f318842a59f70a483e557280a"));
+
+        CourseDao courseDao=new CourseDao();
+        ArrayList<course> list=courseDao.GetAllCourse();
+        if(list!=null&&list.size()>0) {
+            for (int i = 0; i < list.size(); i++) {
+                course cr = list.get(i);
+                System.out.println(cr.getTitle()+" "+cr.getDescription());
+
+            }
+        }
     }
 }

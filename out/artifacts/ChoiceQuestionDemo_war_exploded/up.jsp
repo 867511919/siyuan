@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>选择题上传</h1>
-<form action="servlet/upServlet" name="upForm" method="post">
+<form action="${pageContext.request.contextPath}/servlet/upServlet" name="upForm" method="post">
     <table>
         <tr>
             <td>标题：</td>
