@@ -26,7 +26,7 @@
     }
 </script>
 <hr />
-<form method="get" action="${pageContext.request.contextPath}/servlet/upCourseServlet">
+<form action="${pageContext.request.contextPath}/servlet/UploadHandleServlet" enctype="multipart/form-data" method="post">
     <table frame="void" width="400px">
 
         <tr>
@@ -37,6 +37,11 @@
         <tr>
             <td>描述：</td>
             <td><input type="text" name="desc" id="desc"/></td>
+        </tr>
+
+        <tr>
+            <td>选择封面：</td>
+            <td><input type="file" name="file"></td>
         </tr>
 
 

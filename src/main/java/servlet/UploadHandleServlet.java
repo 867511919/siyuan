@@ -106,6 +106,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -118,6 +119,7 @@ import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import server.UPloadUtil;
 
 /**
  * @ClassName: UploadHandleServlet
@@ -139,7 +141,9 @@ public class UploadHandleServlet extends HttpServlet {
             //创建临时目录
             tmpFile.mkdir();
         }
-
+        String title="";
+        String desc="";
+        StringBuffer imgsb=new StringBuffer();
         //消息提示
         String message = "";
         try{
@@ -186,6 +190,12 @@ public class UploadHandleServlet extends HttpServlet {
                     String value = item.getString("UTF-8");
                     //value = new String(value.getBytes("iso8859-1"),"UTF-8");
                     System.out.println(name + "=" + value);
+                    if(name.equals("title")){
+                        title=value;
+                    }
+                    if(name.equals("desc")){
+                        desc=value;
+                    }
                 }else{//如果fileitem中封装的是上传文件
                     //得到上传的文件名称，
                     String filename = item.getName();
@@ -211,6 +221,10 @@ public class UploadHandleServlet extends HttpServlet {
                     System.out.println("save "+saveFilename);
                     //创建一个文件输出流
                     FileOutputStream out = new FileOutputStream(realSavePath + "/" + saveFilename);
+                    imgsb.append("localhost:8080/upload/");
+                    imgsb.append(saveFilename);
+                    System.out.println(imgsb.toString());
+
                     //创建一个缓冲区
                     byte buffer[] = new byte[1024];
                     //判断输入流中的数据是否已经读完的标识
@@ -243,8 +257,18 @@ public class UploadHandleServlet extends HttpServlet {
             message= "文件上传失败！";
             e.printStackTrace();
         }
-        request.setAttribute("message",message);
-        request.getRequestDispatcher("/message.jsp").forward(request, response);
+//        String title=request.getParameter("title");
+//        String desc=request.getParameter("desc");
+        UPloadUtil uPloadUtil=new UPloadUtil();
+        HashMap<String, String> map = new HashMap<String,String>();
+        map=uPloadUtil.getAddress_Auth(title,desc);
+        request.setAttribute("tit",title);
+        request.setAttribute("des",desc);
+        request.setAttribute("img",imgsb.toString());
+        request.setAttribute("remap",map);
+        request.getRequestDispatcher("../upCourse2.jsp").forward(request,response);
+//        request.setAttribute("message",message);
+//        request.getRequestDispatcher("/message.jsp").forward(request, response);
     }
 
     /**

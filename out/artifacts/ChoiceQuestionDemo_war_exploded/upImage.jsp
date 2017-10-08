@@ -16,9 +16,30 @@
 </head>
 <body>
     <form action="${pageContext.request.contextPath}/servlet/UploadHandleServlet" enctype="multipart/form-data" method="post">
-        <input type="file" name="file">
+        <table>
 
-        <input type="submit" value="提交">
+            <tr>
+                <td>标题：</td>
+                <td><input type="text" name="title" id="tit"/></td>
+            </tr>
+
+            <tr>
+                <td>描述：</td>
+                <td><input type="text" name="desc" id="desc"/></td>
+            </tr>
+
+            <tr>
+                <td>选择封面：</td>
+                <td><input type="file" name="file"></td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" value="获取上传通道"/></td>
+            </tr>
+
+
+        </table>
+
     </form>
 
 

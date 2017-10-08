@@ -36,6 +36,11 @@
         </tr>
 
         <tr>
+            <td>图片链接为:</td>
+            <td><input type="text" name="imag" value="<%=request.getAttribute("img")%>"></td>
+        </tr>
+
+        <tr>
             <td colspan="2"><input type="submit" value="获取上传通道"/></td>
         </tr>
     </table>
