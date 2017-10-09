@@ -21,6 +21,7 @@ public class upCourseServlet extends HttpServlet {
         CourseDao cd=new CourseDao();
         cd.saveCourse(movId);
         request.setAttribute("movid",movId);
+        request.getRequestDispatcher("../upCourse3.jsp").forward(request,response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

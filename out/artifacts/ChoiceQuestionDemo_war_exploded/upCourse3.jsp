@@ -1,4 +1,6 @@
-<%--
+<%@ page import="entity.BreakPoint" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="dao.BreakPointDAO" %><%--
   Created by IntelliJ IDEA.
   User: zhangyan
   Date: 2017/10/8
@@ -135,6 +137,7 @@
 
 </head>
 <body>
+
 <div class="container-fluid-full">
     <div class="row-fluid">
         <div class="container-fluid-full">
@@ -172,21 +175,67 @@
                                         <table   class="table table-striped table-bordered ">
                                                 <thead>
                                             <tr  >
-                                                    <th>数量</th>
-                                                    <th>断点</th>
-                                             
-                                            <th>添加</th>
+                                                    
+                                                    <th>断点时间</th>
+                                             `
                                                 </tr>
                                             </thead>
                                                 <tbody>
+
+
+                                        <tr>
+
+                                            <td class="center">起始</td>
+
+                                            <td class="center">
+                                                <a class="glyphicons-icon circle_plus" href="${pageContext.request.contextPath}/servlet/upBreakPointServlet?movid=<%=request.getAttribute("movid")%>" >
+                                                    <i class="halflings-icon white zoom-in"></i>
+                                                </a>
+                                                <a class="glyphicons-icon circle_minus" href="${pageContext.request.contextPath}/servlet/upBreakPointServlet">
+                                                    <i class="halflings-icon white edit"></i>
+                                                </a>
+                                            </td>
+
+
+                                        </tr>
+                                        <%
+                                            String movid= (String) request.getAttribute("movid");
+
+                                            BreakPointDAO bpd=new BreakPointDAO();
+                                            ArrayList<BreakPoint> list=new ArrayList<BreakPoint>();
+                                            list= bpd.queryByMovid(movid);
+                                            if(list!=null&&list.size()>0) {
+                                                for (int i = 0; i < list.size(); i++) {
+                                                    BreakPoint bp = list.get(i);
+                                        %>
+                                        <tr>
+
+                                            <td class="center"><%=bp.getStartTime()%></td>
+
+                                            <td class="center">
+                                                <a class="glyphicons-icon circle_plus" href="${pageContext.request.contextPath}/servlet/upBreakPointServlet?movid=<%=request.getAttribute("movid")%>" >
+                                                    <i class="halflings-icon white zoom-in"></i>
+                                                </a>
+                                                <a class="glyphicons-icon circle_minus" href="${pageContext.request.contextPath}/servlet/upBreakPointServlet">
+                                                    <i class="halflings-icon white edit"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+
+                                        <%
+                                                }
+                                            }
+                                        %>
                                             <tr id="a">
-                                                     
-                                                    <td class="td">1</td>
-                                                    <td><input  type="text" name=""></td>
-                                                    <td><input  type="text" name=""></td>
-                                                    <td><input  type="text" name=""></td>
-                                                    <td><input id="Button" type="button"  value="添加" onclick="ShowDiv('MyDiv','fade')"></td>
-                                             </tr>
+                                            <%--         --%>
+                                            <%--        <td class="td">1</td>--%>
+                                            <%--        <td><input  type="text" name=""></td>--%>
+                                            <%--        <td><input  type="text" name=""></td>--%>
+                                            <%--        <td><input  type="text" name=""></td>--%>
+                                            <%--&lt;%&ndash;        <td><input id="Button" type="button"  value="添加" onclick="ShowDiv('MyDiv','fade')"></td>&ndash;%&gt;--%>
+                                                    <%--<td> <i class="glyphicons-icon circle_plus" href="./upCourse4.jsp?movId=<%=request.getAttribute("movid")%>"></i></td>--%>
+                                            <%-- </tr>--%>
                                         </tbody>
 
 
@@ -200,9 +249,9 @@
                                                  
                                         </table>
 
-                                        <i class="glyphicons-icon circle_plus" onclick="fun()"></i>
-                                        <i class="glyphicons-icon circle_minus" onclick="del()"></i>
-                                        <button type="submit" class="btn btn-primary"> 确定</button>
+                                        <%--<i class="glyphicons-icon circle_plus" onclick="fun()"></i>--%>
+                                        <%--<i class="glyphicons-icon circle_minus" onclick="del()"></i>--%>
+                                        <%--<button type="submit" class="btn btn-primary"> 确定</button>--%>
                                     </div>
 
                                 </div>

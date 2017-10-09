@@ -26,6 +26,37 @@ public class BreakPointDAO {
 
     }
 
+    public void new_addPoint(BreakPoint bp){
+
+        try {
+            Connection conn= DBUtil.getConnection();
+            String sql="insert into breakpoint (movID,startTime,title1,body1,A1,B1,C1,D1,desc1,title2,body2,A2,B2,C2,D2,desc2) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            PreparedStatement pst=conn.prepareStatement(sql);
+            pst.setString(1,bp.getMovId());
+            pst.setString(2,bp.getStartTime());
+            pst.setString(3,bp.getTitle1());
+            pst.setString(4,bp.getBody1());
+            pst.setString(5,bp.getA1());
+            pst.setString(6,bp.getB1());
+            pst.setString(7,bp.getC1());
+            pst.setString(8,bp.getD1());
+            pst.setString(9,bp.getDesc1());
+
+            pst.setString(10,bp.getTitle1());
+            pst.setString(11,bp.getBody2());
+            pst.setString(12,bp.getA2());
+            pst.setString(13,bp.getB2());
+            pst.setString(14,bp.getC2());
+            pst.setString(15,bp.getD2());
+            pst.setString(16,bp.getDesc2());
+            pst.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public ArrayList<BreakPoint> getAllBreakPoint(){
         ArrayList<BreakPoint> list=new ArrayList<BreakPoint>();
         ResultSet rs=null;

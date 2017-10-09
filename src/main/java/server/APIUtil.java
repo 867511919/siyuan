@@ -63,7 +63,7 @@ public class APIUtil {
         String ModifyTime=Video.get("ModifyTime").getAsString();
         String Title=Video.get("Title").getAsString();
         String CreateTime=Video.get("CreateTime").getAsString();
-        String Size=Video.get("Size").getAsString();
+//        String Size=Video.get("Size").getAsString();
         String desc=Video.get("Description").getAsString();
 //        System.out.println(VideoId);
 //        System.out.println(ModifyTime);
@@ -77,7 +77,7 @@ public class APIUtil {
         cs.setTitle(Title);
         cs.setModifyTime(ModifyTime);
         cs.setCreateTime(CreateTime);
-        cs.setSize(Size);
+//        cs.setSize(Size);
         cs.setDescription(desc);
 
         return cs;

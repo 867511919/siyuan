@@ -126,7 +126,6 @@
     </tr>
 </form>
 
-<button type="button" href="${pageContext.request.contextPath}/servelt/upCourseHandleServlet">下一步</button>
 
 <script>
 

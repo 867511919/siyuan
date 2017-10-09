@@ -78,4 +78,12 @@
         <servlet-name>upCourseHandleServlet</servlet-name>
         <url-pattern>/servelt/upCourseHandleServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>upBreakPointServlet</servlet-name>
+        <servlet-class>servlet.upBreakPointServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>upBreakPointServlet</servlet-name>
+        <url-pattern>/servlet/upBreakPointServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
